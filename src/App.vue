@@ -9,7 +9,7 @@ import MaskLayer from "./components/MaskLayer.vue"
 
 const el = ref<HTMLDivElement>()
 const transform = ref({ pan: [0, 0], zoom: 1 })
-const threshold = ref(0)
+const threshold = ref(50)
 const opacity = ref(0.5)
 
 useEventListener(el, cornerstone.EVENTS.CAMERA_MODIFIED, () => {
@@ -30,6 +30,7 @@ onMounted(() => {
 <template>
   <main>
     <h1>Vue Cornerstone3D mask threshold</h1>
+
     <div class="container">
       <MaskLayer
         :pan="transform.pan"
@@ -57,6 +58,12 @@ onMounted(() => {
         step="1"
       />
       Threshold: {{ threshold }}
+    </p>
+    <p>Left Mouse Button: Pan | Right Mouse Button: Zoom</p>
+    <p>
+      <a href="https://github.com/ChienChihYeh/vue-cornerstone-threshold"
+        >GitHub Repository</a
+      >
     </p>
   </main>
 </template>
