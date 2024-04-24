@@ -10,14 +10,18 @@ const props = defineProps<{
 }>()
 
 const layer = ref<HTMLCanvasElement>()
+const description = ref<Uint16Array>()
 
-const imageArray = new Uint8Array(mockMaskArray)
+// implementation: watch series/slice changes and fetch new threshold description and store in ref
+description.value = new Uint16Array(mockMaskArray)
 
-function renderMask(sourceArray: Uint8Array, threshold: number) {
+// depending on the implementation, sourceArray can be all or part of the description
+function renderMask(sourceArray: Uint16Array | undefined, threshold: number) {
   if (!layer.value) return
   const canvas = layer.value
   const ctx = canvas.getContext("2d")
   ctx?.clearRect(0, 0, canvas.width, canvas.height)
+  if (!sourceArray) return
   const imageData = ctx?.createImageData(canvas.width, canvas.height)
   if (!imageData) return
   for (let i = 0; i < sourceArray.length; i++) {
@@ -33,11 +37,11 @@ function renderMask(sourceArray: Uint8Array, threshold: number) {
 }
 
 watchEffect(() => {
-  renderMask(imageArray, props.threshold)
+  renderMask(description.value, props.threshold)
 })
 
 onMounted(() => {
-  renderMask(imageArray, props.threshold)
+  renderMask(description.value, props.threshold)
 })
 </script>
 <template>

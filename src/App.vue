@@ -9,7 +9,7 @@ import MaskLayer from "./components/MaskLayer.vue"
 
 const el = ref<HTMLDivElement>()
 const transform = ref({ pan: [0, 0], zoom: 1 })
-const threshold = ref(50)
+const threshold = ref(500)
 const opacity = ref(0.5)
 
 useEventListener(el, cornerstone.EVENTS.CAMERA_MODIFIED, () => {
@@ -54,7 +54,7 @@ onMounted(() => {
         type="range"
         v-model.number="threshold"
         min="0"
-        max="100"
+        max="1000"
         step="1"
       />
       Threshold: {{ threshold }}
