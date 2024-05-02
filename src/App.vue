@@ -11,8 +11,10 @@ import { imageId } from "./utils/constant";
 import { getViewportCurrentImageIdIndex } from "./utils/helpers";
 import MaskLayer from "./components/MaskLayer.vue";
 
+const defaultZoom = 1 / 1.1;
+
 const el = ref<HTMLDivElement>();
-const transform = ref({ pan: [0, 0], zoom: 1, insetImageMultiplier: 1.1 });
+const transform = ref({ pan: [0, 0], zoom: defaultZoom });
 const threshold = ref(500);
 const opacity = ref(0.5);
 
@@ -63,8 +65,8 @@ onMounted(() => {
       Threshold: {{ threshold }}
     </p>
     <p>
-      Left Mouse Button: Pan | Right Mouse Button: Zoom | Zoom:
-      {{ transform.zoom.toFixed(2) }} | Pan: [x:
+      Left Mouse Button: Pan | Right Mouse Button: Zoom | Mask Zoom:
+      {{ transform.zoom.toFixed(2) }} | Mask Pan: [x:
       {{ transform.pan[0].toFixed(2) }}, y: {{ transform.pan[1].toFixed(2) }}]
     </p>
     <p>

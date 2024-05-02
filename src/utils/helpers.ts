@@ -51,7 +51,7 @@ function enableElement(element: HTMLDivElement) {
     type: ViewportType.STACK,
     defaultOptions: {
       orientation: OrientationAxis.AXIAL,
-      displayArea: { imageArea: [1, 1] },
+      // displayArea: { imageArea: [1, 1] },
       // background: <cornerstone.Types.Point3>[0.2, 0, 0.2],
     },
   });
