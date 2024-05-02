@@ -1,36 +1,39 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
-import * as cornerstone from "@cornerstonejs/core"
-import { useEventListener } from "./hooks/event"
-import { initDemo, updateViewportTransform, resetCamera } from "./utils/helpers"
-import { imageId } from "./utils/constant"
-import { getViewportCurrentImageIdIndex } from "./utils/helpers"
-import MaskLayer from "./components/MaskLayer.vue"
+import { ref, onMounted } from "vue";
+import * as cornerstone from "@cornerstonejs/core";
+import { useEventListener } from "./hooks/event";
+import {
+  initDemo,
+  updateViewportTransform,
+  resetCamera,
+} from "./utils/helpers";
+import { imageId } from "./utils/constant";
+import { getViewportCurrentImageIdIndex } from "./utils/helpers";
+import MaskLayer from "./components/MaskLayer.vue";
 
-const el = ref<HTMLDivElement>()
-const transform = ref({ pan: [0, 0], zoom: 1 })
-const threshold = ref(500)
-const opacity = ref(0.5)
+const el = ref<HTMLDivElement>();
+const transform = ref({ pan: [0, 0], zoom: 1, insetImageMultiplier: 1.1 });
+const threshold = ref(500);
+const opacity = ref(0.5);
 
 useEventListener(el, cornerstone.EVENTS.CAMERA_MODIFIED, () => {
-  updateViewportTransform(transform)
-})
+  updateViewportTransform(transform);
+});
 
 useEventListener(el, cornerstone.EVENTS.STACK_NEW_IMAGE, () => {
-  console.log("currentImageIdIndex:", getViewportCurrentImageIdIndex())
-})
+  console.log("currentImageIdIndex:", getViewportCurrentImageIdIndex());
+});
 
 onMounted(() => {
   if (el.value) {
-    initDemo(el.value, [imageId])
+    initDemo(el.value, [imageId]);
   }
-})
+});
 </script>
 
 <template>
   <main>
     <h1>Vue Cornerstone3D mask threshold</h1>
-
     <div class="container">
       <MaskLayer
         :pan="transform.pan"
@@ -59,7 +62,11 @@ onMounted(() => {
       />
       Threshold: {{ threshold }}
     </p>
-    <p>Left Mouse Button: Pan | Right Mouse Button: Zoom</p>
+    <p>
+      Left Mouse Button: Pan | Right Mouse Button: Zoom | Zoom:
+      {{ transform.zoom.toFixed(2) }} | Pan: [x:
+      {{ transform.pan[0].toFixed(2) }}, y: {{ transform.pan[1].toFixed(2) }}]
+    </p>
     <p>
       <a href="https://github.com/ChienChihYeh/vue-cornerstone-threshold"
         >GitHub Repository</a
